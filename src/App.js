@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import PictureList from "./components/PictureList";
+import ShoppingCart from "./components/ShoppingCart";
+import "./styles.css";
 
 function App() {
+  const [cart, setCart] = useState([]);
+  const [total, setTotal] = useState(0);
+
+  const handleBuy = (picture) => {
+    setCart([...cart, picture]);
+    setTotal(total + picture.price);
+  };
+
+  const handlePay = () => {
+    // Implement payment logic here
+    alert("Payment successful!");
+    setCart([]);
+    setTotal(0);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div>
+      <header>
+        <h1>Art Gallery</h1>
       </header>
+      <div className="container">
+        <PictureList onBuy={handleBuy} />
+        <ShoppingCart items={cart} total={total} onPay={handlePay} />
+      </div>
     </div>
   );
 }
